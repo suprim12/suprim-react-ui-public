@@ -1,0 +1,25 @@
+{
+  "name": "suprim-react-ui-public",
+  "version": "1.5.0",
+  "description": "Modern and minimalist React UI library, originating from Suprim's design.",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Suprim",
+    "Suprim React Ui",
+    "components",
+    "react components",
+    "react ui"
+  ],
+  "author": "suprim12",
+  "license": "MIT",
+  "dependencies": {
+    "styled-components": "^5.1.1"
+  }
+}
