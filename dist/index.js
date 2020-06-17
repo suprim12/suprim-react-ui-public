@@ -81,10 +81,16 @@ Object.defineProperty(exports, "Note", {
     return _Note.default;
   }
 });
+Object.defineProperty(exports, "useToasts", {
+  enumerable: true,
+  get: function get() {
+    return _ToastProvider.useToasts;
+  }
+});
 Object.defineProperty(exports, "SuprimThemeProvider", {
   enumerable: true,
   get: function get() {
-    return _styledComponents.ThemeProvider;
+    return _SuprimThemeProvider.default;
   }
 });
 Object.defineProperty(exports, "GlobalStyles", {
@@ -121,7 +127,9 @@ var _Progress = _interopRequireDefault(require("./progress/Progress"));
 
 var _Note = _interopRequireDefault(require("./note/Note"));
 
-var _styledComponents = require("styled-components");
+var _ToastProvider = require("./toast/ToastProvider");
+
+var _SuprimThemeProvider = _interopRequireDefault(require("./suprim-provider/SuprimThemeProvider"));
 
 var _styles = require("./styles");
 

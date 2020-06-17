@@ -33,4 +33,4 @@ class Example extends Component {
 
 ## License
 
-MIT © [suprim12](https://github.com/suprim12)
+[MIT](https://github.com/suprim12/suprim-react-ui-public/blob/master/LICENSE)

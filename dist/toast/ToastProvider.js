@@ -5,21 +5,29 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.default = exports.useToasts = exports.ToastContext = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _propTypes = _interopRequireDefault(require("prop-types"));
+var _reactDom = require("react-dom");
 
-var _ToastProvider = require("./ToastProvider");
+var _Toast = _interopRequireDefault(require("./Toast"));
 
-var _Toast = require("./Toast.Style");
+var _Toast2 = require("./Toast.Style");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -33,84 +41,95 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-function Toast(_ref) {
-  var children = _ref.children,
-      id = _ref.id,
-      hovered = _ref.hovered,
-      count = _ref.count,
-      total = _ref.total,
-      type = _ref.type;
+var ToastContext = _react.default.createContext(null);
 
-  var _useToasts = (0, _ToastProvider.useToasts)(),
-      remove = _useToasts.remove;
+exports.ToastContext = ToastContext;
+var id = 1;
 
-  var reverseIndex = (0, _react.useMemo)(function () {
-    return total - (count + 1);
-  }, [total, count]);
+var ToastProvider = function ToastProvider(_ref) {
+  var children = _ref.children;
 
-  var _useState = (0, _react.useState)(false),
+  var _useState = (0, _react.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
-      visible = _useState2[0],
-      setVisible = _useState2[1];
+      toasts = _useState2[0],
+      setToasts = _useState2[1];
+
+  var addToast = (0, _react.useCallback)(function (_ref2) {
+    var content = _ref2.content,
+        _ref2$type = _ref2.type,
+        type = _ref2$type === void 0 ? "default" : _ref2$type;
+    setToasts(function (toasts) {
+      return [].concat(_toConsumableArray(toasts), [{
+        id: id++,
+        content: content,
+        type: type
+      }]);
+    });
+  }, [setToasts]);
+  var removeToast = (0, _react.useCallback)(function (id) {
+    setToasts(function (toasts) {
+      return toasts.filter(function (t) {
+        return t.id !== id;
+      });
+    });
+  }, [setToasts]);
+  var toastCRef = (0, _react.useRef)(null);
 
   var _useState3 = (0, _react.useState)(false),
       _useState4 = _slicedToArray(_useState3, 2),
-      hide = _useState4[0],
-      setHide = _useState4[1];
+      hovered = _useState4[0],
+      setHovered = _useState4[1];
 
   (0, _react.useEffect)(function () {
-    var timer = setTimeout(function () {
-      setVisible(true);
-      clearTimeout(timer);
-    }, 10);
+    var target = toastCRef.current;
+    setHovered(false);
+    target.addEventListener('mouseover', function () {
+      setHovered(true);
+    });
+    target.addEventListener('mouseleave', function () {
+      setHovered(false);
+    });
     return function () {
-      return clearTimeout(timer);
+      target.removeEventListener('mouseover', function () {
+        setHovered(true);
+      });
+      target.removeEventListener('mouseleave', function () {
+        setHovered(false);
+      });
     };
-  }, []);
-  (0, _react.useEffect)(function () {
-    var unMount = false;
-    if (unMount) return;
-    if (hovered) return;
-    var timer = setTimeout(function () {
-      setHide(true);
-      setTimeout(function () {
-        remove(id);
-      }, 1000);
-    }, 3000);
-    return function () {
-      unMount = true;
-      clearTimeout(timer);
+  }, [toasts]);
+  var toastElements = (0, _react.useMemo)(function () {
+    return toasts.map(function (t, index) {
+      return /*#__PURE__*/_react.default.createElement(_Toast.default, {
+        key: t.id,
+        id: t.id,
+        type: t.type,
+        count: index,
+        total: toasts.length,
+        hovered: hovered
+      }, t.content);
+    });
+  }, [toasts, hovered]);
+  var providedvalue = (0, _react.useMemo)(function () {
+    return {
+      add: addToast,
+      remove: removeToast,
+      toasts: toasts
     };
-  }, [id, remove, hovered]);
-  return /*#__PURE__*/_react.default.createElement(_Toast.ToastStyle, {
-    count: reverseIndex,
-    hovered: hovered,
-    total: total,
-    className: "supirm-ui-toast suprim-ui-toast-".concat(type, "  ").concat(visible && !hide ? 'visible' : '', "   ").concat(hide ? 'hide' : '')
-  }, /*#__PURE__*/_react.default.createElement("div", {
-    className: "supirm-ui-toast--text"
-  }, children), /*#__PURE__*/_react.default.createElement(_Toast.ToastCloseStyle, {
-    onClick: function onClick() {
-      return remove(id);
-    },
-    className: "supirm-ui-toast--close-btn"
-  }, /*#__PURE__*/_react.default.createElement("svg", {
-    fill: "currentColor",
-    viewBox: "0 0 20 20"
-  }, /*#__PURE__*/_react.default.createElement("path", {
-    fillRule: "evenodd",
-    d: "M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z",
-    clipRule: "evenodd"
-  }))));
-}
+  }, [addToast, removeToast, toasts]);
+  return /*#__PURE__*/_react.default.createElement(ToastContext.Provider, {
+    value: providedvalue
+  }, /*#__PURE__*/(0, _reactDom.createPortal)( /*#__PURE__*/_react.default.createElement(_Toast2.ToastWrapperStyle, {
+    className: "suprim-ui-toast ".concat(hovered ? 'hover' : ''),
+    ref: toastCRef
+  }, toastElements), document.body), children);
+};
 
-Toast.propTypes = {
-  type: _propTypes.default.oneOf(['default', 'secondary', 'primary', 'danger', 'warning', 'success']),
-  hovered: _propTypes.default.bool
+var useToasts = function useToasts() {
+  var context = (0, _react.useContext)(ToastContext);
+  return context;
 };
-Toast.defaultProps = {
-  type: 'default',
-  hovered: false
-};
-var _default = Toast;
+
+exports.useToasts = useToasts;
+var _default = ToastProvider;
 exports.default = _default;

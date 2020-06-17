@@ -12,10 +12,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var SpacerStyle = _styledComponents.default.span.withConfig({
   displayName: "SpacerStyle__SpacerStyle",
   componentId: "sc-1sptzus-0"
-})(["display:block;height:1px;width:1px;margin-left:calc(20.3333px  ", ");margin-top:calc(20.3333px  ", ");"], function (props) {
-  return props.x ? "* ".concat(props.x) : '';
+})(["display:block;height:1px;width:1px;margin-left:", "px;margin-top:", "px;"], function (props) {
+  return 20.3333 * props.x;
 }, function (props) {
-  return props.y ? "* ".concat(props.y) : '';
+  return 20.3333 * props.y;
 });
 
 exports.SpacerStyle = SpacerStyle;

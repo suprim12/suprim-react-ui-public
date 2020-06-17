@@ -39,7 +39,8 @@ Note.propTypes = {
   className: _propTypes.default.string
 };
 Note.defaultProps = {
-  label: 'Note'
+  label: 'Note',
+  type: 'default'
 };
 var _default = Note;
 exports.default = _default;
