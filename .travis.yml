@@ -8,8 +8,9 @@ node_js:
 install:
   - npm ci
 
-script:
-  - npm test -- --coverage
+
+after_script:
+  - COVERALLS_REPO_TOKEN=$repo_token npm run coveralls
 
 notifications:
   email: false
