@@ -2,7 +2,7 @@
 
 > Modern and minimalist React UI library, originating from Suprim's design.
 
-[![Build Status](https://travis-ci.com/suprim12/suprim-react-ui.svg?token=nY7pXrDphx6WpYSmhszC&branch=master)](https://travis-ci.com/suprim12/suprim-react-ui) [![NPM](https://img.shields.io/npm/v/suprim-react-ui.svg)](https://www.npmjs.com/package/suprim-react-ui) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) ![David](https://img.shields.io/david/suprim12/suprim-react-ui) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/suprim-react-ui?color=ggg) ![npm bundle size](https://img.shields.io/bundlephobia/min/suprim-react-ui?color=ggg) ![NPM](https://img.shields.io/npm/l/suprim-react-ui?color=ggg)
+[![Build Status](https://travis-ci.com/suprim12/suprim-react-ui.svg?token=nY7pXrDphx6WpYSmhszC&branch=master)](https://travis-ci.com/suprim12/suprim-react-ui) [![NPM](https://img.shields.io/npm/v/suprim-react-ui.svg)](https://www.npmjs.com/package/suprim-react-ui) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) ![David](https://img.shields.io/david/suprim12/react-ui) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/suprim-react-ui?color=ggg) ![npm bundle size](https://img.shields.io/bundlephobia/min/suprim-react-ui?color=ggg) ![NPM](https://img.shields.io/npm/l/suprim-react-ui?color=ggg)
 
 ## Install
 
