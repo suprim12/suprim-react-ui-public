@@ -3,9 +3,9 @@
   "version": "1.5.0",
   "description": "Modern and minimalist React UI library, originating from Suprim's design.",
   "main": "dist/index.js",
+  "module": "dist/index.modern.js",
   "files": [
-    "dist",
-    "README.md"
+    "dist"
   ],
   "scripts": {
     "test": "react-scripts test --env=jsdom",
@@ -24,5 +24,7 @@
   "dependencies": {
     "styled-components": "^5.1.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "styled-components": "^5.1.1"
+  }
 }
